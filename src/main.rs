@@ -1,3 +1,5 @@
+use std::path::Path;
+
 use fltk::{app, button::Button, frame::Frame, prelude::*, window::Window, group::Flex, enums::Align};
 
 fn main() {
@@ -15,7 +17,7 @@ fn main() {
 
     let mut btn = Button::default().with_label("Click me");
     btn.set_callback(move |_| {
-        frame.set_label("Button clicked!");
+        frame.set_label(get_files(Path::new("C:/Users/22yat/Music"))[0].as_str());
     });
     btn.set_align(Align::Left | Align::Inside);
     flex.fixed(&mut btn, 30);
@@ -25,4 +27,10 @@ fn main() {
     wind.show();
 
     app.run().unwrap();
+}
+fn get_files(path: &Path) -> Vec<String> {
+    if path.is_dir() {
+        return vec!["Success".to_string()];
+    }
+    return vec!["Failure".to_string()];
 }
