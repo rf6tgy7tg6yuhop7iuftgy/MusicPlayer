@@ -1,0 +1,43 @@
+name: Build MusicPlayer
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [windows-latest, macos-latest, ubuntu-latest]
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Build release
+        run: cargo build --release
+
+      - name: Package binary
+        shell: bash
+        run: |
+          mkdir dist
+          if [[ "${{ runner.os }}" == "Windows" ]]; then
+            cp target/release/MusicPlayer.exe dist/
+            cd dist && 7z a MusicPlayer-windows.zip MusicPlayer.exe
+          elif [[ "${{ runner.os }}" == "macOS" ]]; then
+            cp target/release/MusicPlayer dist/
+            cd dist && zip MusicPlayer-macos.zip MusicPlayer
+          else
+            cp target/release/MusicPlayer dist/
+            cd dist && zip MusicPlayer-linux.zip MusicPlayer
+          fi
+      
+      - name: Upload packaged binary
+        uses: actions/upload-artifact@v4
+        with:
+          name: MusicPlayer-${{ runner.os }}
+          path: dist/*.zip
