@@ -1,11 +1,12 @@
 use std::fs;
 use std::path::Path;
+use winres::WindowsResource;
 
 fn main() {
     #[cfg(windows)]
     {
-        let mut res = winres::WindowsResource::new();
-        res.set_icon("assets/icon.ico");
+        let mut res = WindowsResource::new();
+        res.set_icon("assets/kenny.ico");
         res.compile().unwrap();
     }
 

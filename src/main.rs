@@ -5,7 +5,6 @@ use fltk::{app, button::Button, frame::Frame, prelude::*, window::Window, group:
 
 fn main() {
     let app = app::App::default();
-    app::set_font("assets/appFont.ttf");
     let mut wind = Window::new(100, 100, 1600, 900, "Music Player");
     wind.make_resizable(true);
 
@@ -41,6 +40,16 @@ fn main() {
     wind.end();
     wind.show();
 
+    match app.load_font("assets/appFont.ttf") {
+        Ok(font_id) => {
+            let font = Font::by_name(&font_id);
+            text_editor.set_label_font(font);
+            frame.set_label_font(font);
+        }
+        Err(e) => {
+            eprintln!("Warning: Failed to load font: {}", e);
+        }
+    }
     app.run().unwrap();
 }
 fn get_default_path() -> String {
