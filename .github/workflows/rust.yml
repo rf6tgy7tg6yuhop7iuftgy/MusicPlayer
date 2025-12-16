@@ -36,18 +36,14 @@ jobs:
           Copy-Item -Path target\release\RustMusicApp.exe -Destination dist\
           Copy-Item -Path assets\kenny.ico -Destination dist\assets\
           Copy-Item -Path assets\appFont.ttf -Destination dist\assets\
-          Push-Location dist
-          Compress-Archive -Path RustMusicApp.exe, assets -DestinationPath RustMusicApp-windows.zip
-          Pop-Location
 
       - name: Package (macOS)
         if: runner.os == 'macOS'
         shell: bash
         run: |
-          mkdir -p dist
+          mkdir -p dist/assets
           cp target/release/RustMusicApp dist/
-          cp -r assets dist/
-          cd dist && zip -r RustMusicApp-macos.zip RustMusicApp assets
+          cp -r assets/* dist/assets/
 
       - name: Package (Linux)
         if: runner.os == 'Linux'
@@ -58,10 +54,9 @@ jobs:
           cp assets/kenny.png dist/assets/
           cp assets/appFont.ttf dist/assets/
           cp RustMusicApp.desktop dist/
-          cd dist && zip -r RustMusicApp-linux.zip RustMusicApp assets RustMusicApp.desktop
 
       - name: Upload packaged binary
         uses: actions/upload-artifact@v4
         with:
           name: RustMusicApp-${{ runner.os }}
-          path: dist/*.zip
+          path: dist/**
