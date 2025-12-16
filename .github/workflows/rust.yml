@@ -33,7 +33,7 @@ jobs:
         run: |
           New-Item -ItemType Directory -Force -Path dist | Out-Null
           New-Item -ItemType Directory -Force -Path dist\assets | Out-Null
-          Copy-Item -Path target\release\RustMusicApp.exe -Destination dist\
+          Copy-Item -Path target\release\RustMusicApp.exe -Destination dist\"Music Player.exe"
           Copy-Item -Path assets\kenny.ico -Destination dist\assets\
           Copy-Item -Path assets\appFont.ttf -Destination dist\assets\
 
@@ -41,25 +41,16 @@ jobs:
         if: runner.os == 'macOS'
         shell: bash
         run: |
-          mkdir -p dist/assets
-          cp target/release/RustMusicApp dist/
-          cp assets/kenny.icns dist/assets/
-          cp assets/appFont.ttf dist/assets
-          cp Info.plist dist/
-      - name: Package (macOS)
-        if: runner.os == 'macOS'
-        shell: bash
-        run: |
           set -euo pipefail
-          APP_NAME=RustMusicApp
-          APP_DIR=dist/${APP_NAME}.app
-          MACOS_DIR=${APP_DIR}/Contents/MacOS
-          RES_DIR=${APP_DIR}/Contents/Resources
+          APP_NAME="Music Player"
+          APP_DIR="dist/${APP_NAME}.app"
+          MACOS_DIR="${APP_DIR}/Contents/MacOS"
+          RES_DIR="${APP_DIR}/Contents/Resources"
 
           mkdir -p "$MACOS_DIR" "$RES_DIR"
 
           # Copy the executable into the bundle
-          cp "target/release/${APP_NAME}" "$MACOS_DIR/${APP_NAME}"
+          cp "target/release/RustMusicApp" "$MACOS_DIR/${APP_NAME}"
           chmod +x "$MACOS_DIR/${APP_NAME}"
 
           # Copy only macOS-specific resources
@@ -74,7 +65,7 @@ jobs:
         shell: bash
         run: |
           mkdir -p dist/assets
-          cp target/release/RustMusicApp dist/
+          cp target/release/RustMusicApp "dist/Music Player"
           cp assets/kenny.png dist/assets/
           cp assets/appFont.ttf dist/assets/
           cp RustMusicApp.desktop dist/
