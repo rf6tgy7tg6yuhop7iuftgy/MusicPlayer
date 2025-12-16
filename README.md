@@ -12,6 +12,8 @@
 
 ✅Figure out github releases and release v0.1
 
+✅Make README
+
 ⬜Custom colors for GUI
 
 ⬜Turn file text display into buttons
@@ -55,3 +57,8 @@
 # Version 3
 
 ⬜Release v3.0
+
+# Known issues
+
+* Icon shows on binary but not on taskbar
+* When opened, a console appears
