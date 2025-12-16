@@ -32,8 +32,11 @@ jobs:
         shell: pwsh
         run: |
           New-Item -ItemType Directory -Force -Path dist | Out-Null
-          Copy-Item -Path assets -Destination dist/assets -Recurse -Force
-          Compress-Archive -Path target\release\RustMusicApp.exe, dist\assets -DestinationPath dist\RustMusicApp-windows.zip
+          Copy-Item -Path target\release\RustMusicApp.exe -Destination dist\
+          Copy-Item -Path assets -Destination dist\assets -Recurse -Force
+          Push-Location dist
+          Compress-Archive -Path RustMusicApp.exe, assets -DestinationPath RustMusicApp-windows.zip
+          Pop-Location
 
       - name: Package (macOS)
         if: runner.os == 'macOS'
