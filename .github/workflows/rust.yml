@@ -43,7 +43,31 @@ jobs:
         run: |
           mkdir -p dist/assets
           cp target/release/RustMusicApp dist/
-          cp -r assets/* dist/assets/
+          cp assets/kenny.icns dist/assets/
+          cp assets/appFont.ttf dist/assets
+          cp Info.plist dist/
+      - name: Package (macOS)
+        if: runner.os == 'macOS'
+        shell: bash
+        run: |
+          set -euo pipefail
+          APP_NAME=RustMusicApp
+          APP_DIR=dist/${APP_NAME}.app
+          MACOS_DIR=${APP_DIR}/Contents/MacOS
+          RES_DIR=${APP_DIR}/Contents/Resources
+
+          mkdir -p "$MACOS_DIR" "$RES_DIR"
+
+          # Copy the executable into the bundle
+          cp "target/release/${APP_NAME}" "$MACOS_DIR/${APP_NAME}"
+          chmod +x "$MACOS_DIR/${APP_NAME}"
+
+          # Copy only macOS-specific resources
+          cp assets/kenny.icns "$RES_DIR/"
+          cp assets/appFont.ttf "$RES_DIR/"
+
+          # Place Info.plist into Contents
+          cp Info.plist "${APP_DIR}/Contents/Info.plist"
 
       - name: Package (Linux)
         if: runner.os == 'Linux'
