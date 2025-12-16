@@ -45,7 +45,7 @@ jobs:
           APP_NAME="Music Player"
           APP_DIR="dist/${APP_NAME}.app"
           MACOS_DIR="${APP_DIR}/Contents/MacOS"
-          RES_DIR="${APP_DIR}/Contents/Resources"
+          RES_DIR="${APP_DIR}/Contents/Resources/assets"
 
           mkdir -p "$MACOS_DIR" "$RES_DIR"
 
@@ -53,7 +53,7 @@ jobs:
           cp "target/release/RustMusicApp" "$MACOS_DIR/${APP_NAME}"
           chmod +x "$MACOS_DIR/${APP_NAME}"
 
-          # Copy only macOS-specific resources
+          # Copy only macOS-specific resources into assets folder
           cp assets/kenny.icns "$RES_DIR/"
           cp assets/appFont.ttf "$RES_DIR/"
 
