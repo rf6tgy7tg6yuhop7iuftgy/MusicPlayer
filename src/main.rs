@@ -1,10 +1,11 @@
 use std::path::Path;
 use directories::UserDirs;
 
-use fltk::{app, button::Button, frame::Frame, prelude::*, window::Window, group::Flex, enums::Align, text::{TextBuffer, TextEditor}};
+use fltk::{app, button::Button, frame::Frame, prelude::*, window::Window, group::Flex, enums::{Align, Font}, text::{TextBuffer, TextEditor}};
 
 fn main() {
     let app = app::App::default();
+    app::set_font(Font::Helvetica, "assets/appFont.ttf");
     let mut wind = Window::new(100, 100, 1600, 900, "Music Player");
     wind.make_resizable(true);
 
