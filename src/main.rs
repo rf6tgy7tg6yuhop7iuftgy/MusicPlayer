@@ -5,7 +5,7 @@ use fltk::{app, button::Button, frame::Frame, prelude::*, window::Window, group:
 
 fn main() {
     let app = app::App::default();
-    app::set_font(Font::Helvetica, "assets/appFont.ttf");
+    app::set_font("assets/appFont.ttf");
     let mut wind = Window::new(100, 100, 1600, 900, "Music Player");
     wind.make_resizable(true);
 
